@@ -1,0 +1,63 @@
+@import url("https://fonts.googleapis.com/css2?family=Muli&display=swap");
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Muli", sans-serif;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  width: 90vw;
+}
+
+.panel {
+  background-size: cover; /*background-size: auto 100%; - use cover to preserve rounded corners on large screens.*/
+  background-position: center;
+  background-repeat: no-repeat; /* so the image does not repeat in the background*/
+  height: 80vh; /* make the height 80% if the view port height*/
+  border-radius: 50px; /*make rounded corners on the container*/
+  color: #fff; /*set the color of the text to white.*/
+  cursor: pointer; /*mouse pointer to hand*/
+  flex: 0.5; /*make the width of the containers equal*/
+  margin: 10px;
+  position: relative; /* so that the h3 inside can be positioned absolute */
+  transition: flex 0.7s ease-in; /* so that when the active property is changed, it will take 0.7 seconds to transition with an ease-in effect*/
+}
+
+.panel h3 {
+  /*target the h3 inside the panel class*/
+  font-size: 24px;
+  position: absolute; /*so we can determine the position within the panel. panel must be set to position relative for this to work*/
+  bottom: 20px; /*20px from the botton*/
+  left: 20px; /*20px from the left*/
+  margin: 0;
+  opacity: 0; /* make the h3 not visible. we will make it visible when the class active is set on the .panel class */
+}
+
+.panel.active {/*selector for active panel*/
+    flex: 5; /*change the width relative to the others. non active the width is .5*/
+}
+
+.panel.active h3 {/*selector for h3 in active panel*/
+    opacity: 1; /*change opacity to 1 makes it visible. the default when not active is 0 meaning not visible*/
+    transition: opacity 0.3s ease-in 0.4s; /*transition the opacity with a delay of 0.4 seconds*/
+}
+
+@media(max-width: 480px){/*styles in here will only take effect if the screen is under 480px*/
+    .container {
+        width: 100vw;
+    }
+
+    .panel:nth-of-type(4),.panel:nth-of-type(5){/*select the 4th and 5th panels*/
+        display: none; /*make them disappear*/
+    }
+}
