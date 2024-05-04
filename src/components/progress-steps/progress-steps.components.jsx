@@ -1,11 +1,27 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 
-import './progress-steps.styles.css'
+import "./progress-steps.styles.css";
 
-function ProgressSteps() {
+function Step({ currentActive, num }) {
+  return (
+    <div className={`circle ${currentActive >= num ? "active" : ""}`}>
+      {num}
+    </div>
+  );
+}
+
+function ProgressSteps({stepCount}) {
   const [currentActive, setCurrentActive] = useState(1);
 
-  const update = () => {
+  function generateNumbers(n) {
+    const numbersArray = [];
+    for (let i = 1; i <= n; i++) {
+      numbersArray.push(i);
+    }
+    return numbersArray;
+  }
+
+  const update = useCallback(() => {
     const circles = document.querySelectorAll(".circle");
     circles.forEach((circle, idx) => {
       if (idx < currentActive) {
@@ -17,11 +33,16 @@ function ProgressSteps() {
 
     const actives = document.querySelectorAll(".active");
     const progress = document.getElementById("progress");
-    progress.style.width =
-      ((actives.length - 1) / (circles.length - 1)) * 100 + "%";
+
+    let progressWidth = `${
+      ((actives.length - 1) / (circles.length - 1)) * 100
+    }%`;
+
+    progress.style.width = progressWidth;
 
     const prev = document.getElementById("prev");
     const next = document.getElementById("next");
+
     if (currentActive === 1) {
       prev.disabled = true;
     } else if (currentActive === circles.length) {
@@ -30,13 +51,13 @@ function ProgressSteps() {
       prev.disabled = false;
       next.disabled = false;
     }
-  };
+  }, [currentActive]);
 
   const handleNext = () => {
     setCurrentActive((prevActive) => {
       let nextActive = prevActive + 1;
-      if (nextActive > 4) {
-        nextActive = 4;
+      if (nextActive > stepCount) {
+        nextActive = stepCount;
       }
       return nextActive;
     });
@@ -54,14 +75,17 @@ function ProgressSteps() {
     update();
   };
 
+  useEffect(() => {
+    update();
+  }, [currentActive, update]);
+
   return (
     <div className="container">
       <div className="progress-container">
         <div className="progress" id="progress"></div>
-        <div className={`circle ${currentActive >= 1 ? "active" : ""}`}>1</div>
-        <div className={`circle ${currentActive >= 2 ? "active" : ""}`}>2</div>
-        <div className={`circle ${currentActive >= 3 ? "active" : ""}`}>3</div>
-        <div className={`circle ${currentActive >= 4 ? "active" : ""}`}>4</div>
+        {generateNumbers(stepCount).map((num) => (
+          <Step currentActive={currentActive} num={num} key={num} />
+        ))}
       </div>
       <button
         className="btn"
@@ -75,7 +99,7 @@ function ProgressSteps() {
         className="btn"
         id="next"
         onClick={handleNext}
-        disabled={currentActive === 4}
+        disabled={currentActive === stepCount}
       >
         Next
       </button>

@@ -35,7 +35,7 @@ const initialPanels = [
   },
 ];
 
-function Panel({ backgroundImg, title, isActive, onClick }) {
+function Panel({ num}) {
   return (
     <div
       className={`panel ${isActive ? "active" : ""}`}
