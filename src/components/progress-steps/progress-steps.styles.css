@@ -1,0 +1,100 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:wght@400;700&display=swap');
+
+:root {
+    --line-border-fill:#3498db;
+    --line-border-empty:#e0e0e0;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f6f7fb;
+    font-family: "Muli", sans-serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden; /*this is meant to hide any scroll bars*/
+  }
+
+  .container {
+    text-align: center;
+  }
+
+  .progress-container {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    margin-bottom: 30px;
+    max-width: 100%;
+    width: 350px;
+  }
+
+  .progress-container::before {
+    content: ''; /*when youuse before or after pseudo, you must add content and set it to an empty string*/
+    background-color: var(--line-border-empty);
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    left: 0;
+    height: 4px;
+    transform: translateY(-50%);
+    z-index: -1;
+  }
+
+  .progress {
+    background-color: var(--line-border-fill);
+    position: absolute;
+    width: 0%;
+    top: 50%;
+    left: 0;
+    height: 4px;
+    transform: translateY(-50%);
+    z-index: -1;
+    transition: .4s ease;
+  }
+
+  .circle {
+    background-color: #fff;
+    color: #999;
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid var(--line-border-empty);
+    transition: .4s ease;
+  }
+
+  .circle.active {
+    border-color: var(--line-border-fill);
+  }
+
+  .btn {
+    background-color: var(--line-border-fill);
+    color: #fff;
+    border: 0; /*remove the button border*/
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 8px 30px;
+    margin: 5px;
+    font-size: 14px;
+  }
+
+  .btn:active {
+    transform: scale(.98);
+  }
+
+  .btn:focus {
+    outline: 0; /*remove the outline when the button is focused*/
+  }
+
+  .btn:disabled {
+    background-color: var(--line-border-empty);
+    cursor: not-allowed; /*change the cursor to not allowed when the button is disabled*/
+  }

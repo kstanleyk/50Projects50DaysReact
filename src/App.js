@@ -1,7 +1,7 @@
-import ExpandingCards from "./components/expanding-cards/expanding-cards.component";
+import ProgressSteps from "./components/progress-steps/progress-steps.components";
 
 function App() {
-  return <ExpandingCards />;
+  return <ProgressSteps />;
 }
 
 export default App;
